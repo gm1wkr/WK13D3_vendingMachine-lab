@@ -59,7 +59,13 @@ public class VendingMachine {
     public void addMoney(Coins coin) {
         if(isCoinAccepted(coin)) {
             this.totalMoneyEntered += coin.getCoinValue();
+//            this.addToFloat(coin, 1);
         }
+
+    }
+
+    public void resetTotalMoneyEntered() {
+        this.totalMoneyEntered = 0;
 
     }
 
@@ -75,7 +81,13 @@ public class VendingMachine {
         return this.getTotalMoneyEntered() - product.getPrice();
     }
 
-    public void addToFloat(Coins denomination, int numberOf) {
+    public void addCoinToFloat(Coins coinToAdd) {
+        int numberOfCoins = coinBin.get(coinToAdd) + 1;
+        coinBin.put(coinToAdd, numberOfCoins);
+        System.out.println(numberOfCoins);
+    }
+
+    public void addStartingFloat(Coins denomination, int numberOf) {
         coinBin.put(denomination, numberOf);
     }
 
@@ -88,5 +100,9 @@ public class VendingMachine {
     }
 
 
+    public void transact() {
+        this.resetTotalMoneyEntered();
+
+    }
 
 }

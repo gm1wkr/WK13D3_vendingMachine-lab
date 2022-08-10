@@ -29,9 +29,9 @@ public class VendingMachineTest {
         vendingMachineReady.addProduct(cola);
         vendingMachineReady.addProduct(crisps);
         vendingMachineReady.addProduct(sweets);
-        vendingMachineReady.addToFloat(poundCoin, 10 );
-        vendingMachineReady.addToFloat(fiftyPence, 10 );
-        vendingMachineReady.addToFloat(twentyPence, 10);
+        vendingMachineReady.addStartingFloat(poundCoin, 10 );
+        vendingMachineReady.addStartingFloat(fiftyPence, 10 );
+        vendingMachineReady.addStartingFloat(twentyPence, 10);
     }
 
     @Test
@@ -116,12 +116,23 @@ public class VendingMachineTest {
     }
 
     @Test
+    public void isCoinAddedToCoinBin(){
+        vendingMachineReady.addCoinToFloat(Coins.ONE_HUNDRED);
+    }
+
+
+    @Test
     public void canCompleteWholeTransactionNoChange(){
         Items selectedItem = vendingMachineReady.getProductByCode(1);
         assertEquals(cola, selectedItem);
         vendingMachineReady.addMoney(Coins.ONE_HUNDRED);
         assertEquals(100, vendingMachineReady.getTotalMoneyEntered());
         assertTrue(vendingMachineReady.enoughMoneyEnteredForItem(selectedItem));
+        vendingMachineReady.transact();
+        assertEquals(0, vendingMachineReady.getTotalMoneyEntered());
+        vendingMachineReady.addCoinToFloat(Coins.FIFTY);
+        vendingMachineReady.addCoinToFloat(Coins.FIFTY);
+        assertEquals(1800, vendingMachineReady.getFloat());
 
     }
 
