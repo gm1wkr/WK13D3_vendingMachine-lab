@@ -10,6 +10,10 @@ public class VendingMachineTest {
     Items sweets;
     Items sweetsOutOfStock;
     VendingMachine vendingMachine;
+    VendingMachine vendingMachineReady;
+    Coins poundCoin;
+    Coins fiftyPence;
+    Coins twentyPence;
 
     @Before
     public void before(){
@@ -17,6 +21,17 @@ public class VendingMachineTest {
         crisps = new Items("Crisps", 50, 10,2);
         sweets = new Items("Sweets", 65, 10,3);
         vendingMachine = new VendingMachine();
+        vendingMachineReady = new VendingMachine();
+
+        poundCoin =  Coins.ONE_HUNDRED;
+        fiftyPence = Coins.FIFTY;
+        twentyPence = Coins.TWENTY;
+        vendingMachineReady.addProduct(cola);
+        vendingMachineReady.addProduct(crisps);
+        vendingMachineReady.addProduct(sweets);
+        vendingMachineReady.addToFloat(poundCoin, 10 );
+        vendingMachineReady.addToFloat(fiftyPence, 10 );
+        vendingMachineReady.addToFloat(twentyPence, 10);
     }
 
     @Test
@@ -86,5 +101,30 @@ public class VendingMachineTest {
     public void canRejectInvalidCoins(){
         assertFalse(vendingMachine.isCoinAccepted(Coins.ONE));
     }
+
+    @Test
+    public void canCalculateChangeDue(){
+        vendingMachine.addProduct(sweets);
+        vendingMachine.addMoney(Coins.ONE_HUNDRED);
+        assertEquals(35, vendingMachine.calculateChange(sweets));
+    }
+
+
+    @Test
+    public void canAddStartingFloat(){
+        assertEquals(1700, vendingMachineReady.getFloat());
+    }
+
+    @Test
+    public void canCompleteWholeTransactionNoChange(){
+        Items selectedItem = vendingMachineReady.getProductByCode(1);
+        assertEquals(cola, selectedItem);
+        vendingMachineReady.addMoney(Coins.ONE_HUNDRED);
+        assertEquals(100, vendingMachineReady.getTotalMoneyEntered());
+        assertTrue(vendingMachineReady.enoughMoneyEnteredForItem(selectedItem));
+
+    }
+
+
 
 }

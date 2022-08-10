@@ -1,8 +1,12 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VendingMachine {
 
     private ArrayList<Items> stockedItems;
+
+    private HashMap<Coins, Integer> coinBin = new HashMap<>();
     private int totalMoneyEntered;
 
     public VendingMachine() {
@@ -53,8 +57,9 @@ public class VendingMachine {
     }
 
     public void addMoney(Coins coin) {
-
+        if(isCoinAccepted(coin)) {
             this.totalMoneyEntered += coin.getCoinValue();
+        }
 
     }
 
@@ -65,4 +70,23 @@ public class VendingMachine {
     public boolean isCoinAccepted(Coins coin) {
         return coin.isCoinAccepted();
     }
+
+    public int calculateChange(Items product) {
+        return this.getTotalMoneyEntered() - product.getPrice();
+    }
+
+    public void addToFloat(Coins denomination, int numberOf) {
+        coinBin.put(denomination, numberOf);
+    }
+
+    public int getFloat() {
+        int runningTotal = 0;
+        for(Map.Entry<Coins, Integer> denomination : coinBin.entrySet()){
+            runningTotal += denomination.getKey().getCoinValue() * denomination.getValue();
+        }
+        return runningTotal;
+    }
+
+
+
 }
