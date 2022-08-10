@@ -136,6 +136,15 @@ public class VendingMachineTest {
 
     }
 
+    @Test
+    public void canCalculateChangeOwed(){
+        Items selectedItem = sweets;
+        vendingMachineReady.addMoney(Coins.FIFTY);
+        vendingMachineReady.addMoney(Coins.FIFTY);
+        assertEquals(100, vendingMachineReady.getTotalMoneyEntered());
+        assertTrue(vendingMachineReady.enoughMoneyEnteredForItem(selectedItem));
+        assertEquals(35, vendingMachineReady.calculateChangeOwed(selectedItem));
+    }
 
 
 }

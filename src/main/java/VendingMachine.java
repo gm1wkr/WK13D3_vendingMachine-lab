@@ -105,4 +105,7 @@ public class VendingMachine {
 
     }
 
+    public int calculateChangeOwed(Items item) {
+        return this.totalMoneyEntered - item.getPrice();
+    }
 }
