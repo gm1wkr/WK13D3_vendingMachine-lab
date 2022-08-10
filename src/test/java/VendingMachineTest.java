@@ -146,5 +146,10 @@ public class VendingMachineTest {
         assertEquals(35, vendingMachineReady.calculateChangeOwed(selectedItem));
     }
 
+    @Test
+    public void canMakeCorrectChange(){
+//        return arrayList of Coins
+//        compare arrayList items with 
 
+    }
 }
