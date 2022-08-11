@@ -1,5 +1,9 @@
+import com.sun.source.tree.AssertTree;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +12,7 @@ public class VendingMachineTest {
     Items cola;
     Items crisps;
     Items sweets;
-    Items sweetsOutOfStock;
+    Items treatyBar;
     VendingMachine vendingMachine;
     VendingMachine vendingMachineReady;
     Coins poundCoin;
@@ -20,6 +24,7 @@ public class VendingMachineTest {
         cola = new Items("Cola", 100, 10, 1);
         crisps = new Items("Crisps", 50, 10,2);
         sweets = new Items("Sweets", 65, 10,3);
+        treatyBar = new Items("treaty bar", 55,10, 5);
         vendingMachine = new VendingMachine();
         vendingMachineReady = new VendingMachine();
 
@@ -148,8 +153,24 @@ public class VendingMachineTest {
 
     @Test
     public void canMakeCorrectChange(){
-//        return arrayList of Coins
-//        compare arrayList items with 
+        Items selectedItem = treatyBar;
+        vendingMachineReady.addMoney(Coins.FIFTY);
+        vendingMachineReady.addMoney(Coins.FIFTY);
+        assertEquals(100, vendingMachineReady.getTotalMoneyEntered());
+        assertTrue(vendingMachineReady.enoughMoneyEnteredForItem(selectedItem));
+        assertEquals(45, vendingMachineReady.calculateChangeOwed(selectedItem));
+        ArrayList<Coins> changeBin = vendingMachineReady.makeChange(selectedItem);
+        System.out.println(changeBin);
+        assertTrue(changeBin.contains(Coins.TWENTY));
+        assertTrue(changeBin.contains(Coins.FIVE));
 
+        int changeGiven =0 ;
+        for(Coins coin : changeBin){
+            changeGiven += coin.getCoinValue();
+        }
+        assertEquals(45, changeGiven);
+
+
+        System.out.println(changeGiven);
     }
 }

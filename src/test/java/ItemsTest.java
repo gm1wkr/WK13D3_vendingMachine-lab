@@ -17,6 +17,7 @@ public class ItemsTest {
         crisps = new Items("Crisps", 50, 10,2);
         sweets = new Items("Sweets", 65, 10,3);
         sweetsOutOfStock = new Items("Sweeties", 65, 0, 4);
+
     }
 
     @Test

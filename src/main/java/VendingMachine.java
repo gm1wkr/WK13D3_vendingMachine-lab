@@ -107,5 +107,40 @@ public class VendingMachine {
 
     public int calculateChangeOwed(Items item) {
         return this.totalMoneyEntered - item.getPrice();
+
+    }
+
+    public ArrayList<Coins> makeChange(Items item){
+        int requiredChange = this.calculateChangeOwed(item);
+        ArrayList<Coins> changeBin = new ArrayList<>();
+        while(requiredChange > 0){
+            if(requiredChange >= Coins.ONE_HUNDRED.getCoinValue()){
+                changeBin.add(Coins.ONE_HUNDRED);
+                requiredChange -= Coins.ONE_HUNDRED.getCoinValue();
+                continue;
+            }
+            if(requiredChange >= Coins.FIFTY.getCoinValue()){
+                changeBin.add(Coins.FIFTY);
+                requiredChange -= Coins.FIFTY.getCoinValue();
+                continue;
+            }
+            if(requiredChange >= Coins.TWENTY.getCoinValue()){
+                changeBin.add(Coins.TWENTY);
+                requiredChange -= Coins.TWENTY.getCoinValue();
+                continue;
+            }
+            if(requiredChange >= Coins.TEN.getCoinValue()){
+                changeBin.add(Coins.TEN);
+                requiredChange -= Coins.TEN.getCoinValue();
+                continue;
+            }
+            if(requiredChange >= Coins.FIVE.getCoinValue()){
+                changeBin.add(Coins.FIVE);
+                requiredChange -= Coins.FIVE.getCoinValue();
+
+            }
+
+        }
+        return changeBin;
     }
 }
